@@ -22,7 +22,6 @@ const fetchPersons = async (department:string): Promise<Person[]> => {
             options
         );
         const data = await response.json();
-        // console.log(data.items);
 
         return data.items;
     } catch (err) {
