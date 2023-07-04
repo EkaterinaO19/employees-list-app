@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {usePersons} from "@/hooks";
 import UserCard from "@/components/UserCard";
+import Link from 'next/link'
+import LoaderComponent from "@/components/LoaderComponent";
 
 export default function UsersList() {
     const [selectedTab, setSelectedTab] = useState("1");
@@ -47,11 +49,15 @@ export default function UsersList() {
     ];
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <LoaderComponent/>;
     }
 
     if (isError) {
         return <div>Something went wrong!</div>;
+    }
+
+    if (!data) {
+        return <div>Data not found!</div>;
     }
 
 
@@ -81,9 +87,11 @@ export default function UsersList() {
                 </ul>
             </div>
             <div>{data?.map(user => (
-                <UserCard key={user.id} user={user}/>
-            ))}</div>
-
+                <Link key={user.id} href={`/user/${user.id}`}>
+                    <UserCard key={user.id} user={user}/>
+                </Link>
+            ))}
+            </div>
         </>
     )
 };
