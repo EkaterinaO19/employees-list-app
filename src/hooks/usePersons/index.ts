@@ -1,6 +1,6 @@
 import {useQuery, UseQueryResult} from '@tanstack/react-query'
 
-interface Person {
+export interface Person {
     id: string;
     avatarUrl: string;
     firstName: string;
@@ -12,7 +12,9 @@ interface Person {
     phone: string;
 }
 
-const fetchPersons = async (department:string): Promise<Person[]> => {
+
+const fetchPersons = async (department: string): Promise<Person[]> => {
+
     try {
         const options = {
             method: "GET",
@@ -22,15 +24,16 @@ const fetchPersons = async (department:string): Promise<Person[]> => {
             options
         );
         const data = await response.json();
+        return data.items
 
-        return data.items;
     } catch (err) {
         console.error(err);
         return [];
     }
 }
 
-const usePersons = (department:string): UseQueryResult<Person[]> => {
+const usePersons = (department: string): UseQueryResult<Person[]> => {
+
     return useQuery({
         queryKey: ['usersList', department],
         queryFn: () => fetchPersons(department)

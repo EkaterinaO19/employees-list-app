@@ -1,13 +1,51 @@
-import {useState} from "react";
-import {usePersons} from "@/hooks";
+import {useContext, useEffect, useState} from "react";
+import {Person, usePersons} from "@/hooks";
 import UserCard from "@/components/UserCard";
 import Link from 'next/link'
 import LoaderComponent from "@/components/LoaderComponent";
+import {ModalContext} from "@/pages";
+
+
+
 
 export default function UsersList() {
     const [selectedTab, setSelectedTab] = useState("1");
     const [queryParameter, setQueryParameter] = useState("all")
+
     const {data, isLoading, isError} = usePersons(queryParameter)
+    const [filtered, setFiltered] = useState<Person[]>([]);
+    const {sortOption} = useContext(ModalContext)
+    useEffect(() => {
+        if (data) {
+            switch (sortOption) {
+                case "birth":
+                    setFiltered(data.sort((a: Person, b: Person) => {
+                        const dateA = new Date(a.birthday);
+                        const dateB = new Date(b.birthday);
+                        return dateA.getTime() - dateB.getTime();
+                    }))
+
+                    break;
+                default:
+                case "name":
+                    setFiltered(data.sort((a: Person, b: Person) => {
+                        let fa = a.firstName.toLowerCase(),
+                            fb = b.firstName.toLowerCase();
+
+                        if (fa < fb) {
+                            return -1;
+                        }
+                        if (fa > fb) {
+                            return 1;
+                        }
+                        return 0;
+                    }))
+                    console.log("Sorting2")
+                    console.log(sortOption)
+                    break;
+            }
+        }
+    }, [sortOption, data])
 
     const items = [
         {
@@ -86,7 +124,7 @@ export default function UsersList() {
                     ))}
                 </ul>
             </div>
-            <div>{data?.map(user => (
+            <div>{filtered.map(user => (
                 <Link key={user.id} href={`/user/${user.id}`}>
                     <UserCard key={user.id} user={user}/>
                 </Link>

@@ -42,7 +42,7 @@ export default function SearchComponent() {
                     </button>
                 </div>
             </div>
-           <SortingModal isOpen={modalOpen} onClose={closeModal}/>
+            {modalOpen&&<SortingModal onClose={closeModal}/>}
         </>
     )
 }
