@@ -1,18 +1,19 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import SortingModal from "../components/SortingModal";
+import {ModalContext} from "@/pages";
 
 export default function SearchComponent() {
     const [modalOpen, setModalOpen] = useState(false);
 
-    const handleButtonClick = (event: any) => {
-        event.preventDefault();
+    const {setSearch, search} = useContext(ModalContext);
+
+    const handleButtonClick = () => {
         setModalOpen(true);
     };
 
     const closeModal = () => {
         setModalOpen(false);
     };
-
 
     return (
         <>
@@ -29,6 +30,8 @@ export default function SearchComponent() {
                     <input
                         className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 focus:outline-none rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Search name, tag, email..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                         className={"absolute right-2.5 bottom-2.5 focus:outline-none px-4 py-2 cursor-pointer"}
@@ -42,7 +45,7 @@ export default function SearchComponent() {
                     </button>
                 </div>
             </div>
-            {modalOpen&&<SortingModal onClose={closeModal}/>}
+            {modalOpen && <SortingModal onClose={closeModal}/>}
         </>
     )
 }
