@@ -45,7 +45,7 @@ const SortingModal: React.FC<SortingModalProps> = ({onClose}) => {
                                 id="name"
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                                 checked={sortOption === 'name'}
-                                onClick={() => handleSortOptionChange('name')}
+                                onChange={() => handleSortOptionChange('name')}
                             />
                             <label
                                 htmlFor="name"
@@ -62,7 +62,7 @@ const SortingModal: React.FC<SortingModalProps> = ({onClose}) => {
                                 id="birth"
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                                 checked={sortOption === 'birth'}
-                                onClick={() => handleSortOptionChange('birth')}
+                                onChange={() => handleSortOptionChange('birth')}
                             />
                             <label
                                 htmlFor="birth"

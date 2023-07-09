@@ -1,9 +1,12 @@
 import {useContext, useState} from "react";
 import SortingModal from "../components/SortingModal";
 import {ModalContext} from "@/pages";
+import {useNavigatorOnline} from "@/hooks";
+import NoConnectionMessage from "@/components/NoConnectionMessage";
 
 export default function SearchComponent() {
     const [modalOpen, setModalOpen] = useState(false);
+    const {isOffline} = useNavigatorOnline();
 
     const {setSearch, search} = useContext(ModalContext);
 
@@ -14,6 +17,10 @@ export default function SearchComponent() {
     const closeModal = () => {
         setModalOpen(false);
     };
+
+    if (isOffline) {
+        return <NoConnectionMessage/>;
+    }
 
     return (
         <>

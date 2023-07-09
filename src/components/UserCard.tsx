@@ -1,18 +1,5 @@
 import React from 'react';
 
-interface UserCardProps {
-    user: UserCard;
-}
-
-interface UserCard {
-    id: string;
-    avatarUrl?: string;
-    firstName: string;
-    lastName: string;
-    userTag: string;
-    position: string;
-}
-
 const UserCard: React.FC<UserCardProps> = ({user}) => {
     return (
         <>

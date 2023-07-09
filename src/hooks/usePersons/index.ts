@@ -1,18 +1,5 @@
 import {useQuery, UseQueryResult} from '@tanstack/react-query'
 
-export interface Person {
-    id: string;
-    avatarUrl: string;
-    firstName: string;
-    lastName: string;
-    userTag: string;
-    department: string;
-    position: string;
-    birthday: string;
-    phone: string;
-}
-
-
 const fetchPersons = async (department: string): Promise<Person[]> => {
 
     try {
@@ -20,7 +7,7 @@ const fetchPersons = async (department: string): Promise<Person[]> => {
             method: "GET",
             headers: {"Content-Type": "application/json"},
         };
-        const response = await fetch(`https://stoplight.io/mocks/kode-frontend-team/koder-stoplight/86566464/users?__example=${department}`,
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL+`?__example=${department}`,
             options
         );
         const data = await response.json();

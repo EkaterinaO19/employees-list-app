@@ -1,16 +1,6 @@
 import {useQuery, UseQueryResult} from '@tanstack/react-query'
 import {ParsedUrlQuery} from "querystring";
 
-interface PersonInfo{
-    id: string;
-    avatarUrl: string;
-    firstName: string;
-    lastName: string;
-    position: string;
-    birthday: string;
-    phone: string;
-}
-
 
 const fetchPerson = async (id:string): Promise<PersonInfo[] | undefined> => {
     try {
@@ -18,7 +8,7 @@ const fetchPerson = async (id:string): Promise<PersonInfo[] | undefined> => {
             method: "GET",
             headers: {"Content-Type": "application/json"},
         };
-        const response = await fetch(`https://stoplight.io/mocks/kode-frontend-team/koder-stoplight/86566464/users?${id}`,
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL+`?${id}`,
             options
         );
         const data = await response.json();
